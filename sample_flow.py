@@ -21,10 +21,8 @@ def add_header_of_csv(results):
     fields = ['id', 'name', 'category', 'sector','constituent_gases'] 
     filename = "climateiq.csv"
     # writing to csv file 
-    with open(filename, 'w') as csvfile: 
-    # creating a csv writer object 
-     csvwriter = csv.writer(csvfile) 
-     # writing the fields 
+    with open(filename, 'w') as csvfile:  
+     csvwriter = csv.writer(csvfile)  
      csvwriter.writerow(fields) 
     return results
     
@@ -36,13 +34,21 @@ def split_result(results):
     datadict=results
     print("*******************")
     print(type(datadict))
-    ids=[]
+    #ids=[]
+    filename = "climateiq.csv"
     for item in datadict:
+    
+     row=[item['id'],item['name'],item['category'],item['sector'],item['constituent_gases']]
+     print(row)
      print("*******************")
-     print(item)
-     print("*******************")
-     ids.append(item['id'])
-    return ids
+     with open(filename, 'a') as csvfile:  
+      csvwriter = csv.writer(csvfile)  
+      csvwriter.writerow(row) 
+     #print("*******************")
+     #print(item)
+     #print("*******************")
+     #ids.append(item['id'])
+    return results
     
 
 @flow
