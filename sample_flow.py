@@ -29,7 +29,7 @@ def add_header_of_csv(results):
     
 @task
 def split_result(results):
-    #datadict = json.load(results)
+    
     #datatict is a list of dict.
     datadict=results
     print("*******************")
@@ -44,10 +44,6 @@ def split_result(results):
      with open(filename, 'a') as csvfile:  
       csvwriter = csv.writer(csvfile)  
       csvwriter.writerow(row) 
-     #print("*******************")
-     #print(item)
-     #print("*******************")
-     #ids.append(item['id'])
     return results
     
 
@@ -61,4 +57,4 @@ def sample_flow(url):
     print(fact_id)
     return fact_id
 
-sample_flow("https://beta3.api.climatiq.io/search?query=Building Materials&results_per_page=100")
+sample_flow("https://beta3.api.climatiq.io/search?query=resin&results_per_page=100")
