@@ -58,3 +58,5 @@ def sample_flow(url):
     return fact_id
 
 sample_flow("https://beta3.api.climatiq.io/search?query=resin&results_per_page=100")
+
+#https://pubchemdocs.ncbi.nlm.nih.gov/pug-rest-tutorial#_Toc458584416
