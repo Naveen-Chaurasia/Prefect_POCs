@@ -60,3 +60,5 @@ def sample_flow(url):
 sample_flow("https://beta3.api.climatiq.io/search?query=resin&results_per_page=100")
 
 #https://pubchemdocs.ncbi.nlm.nih.gov/pug-rest-tutorial#_Toc458584416
+#https://www.slideshare.net/SunghwanKim95/how-can-you-access-pubchem-programmatically-96003851
+#https://chemspipy.readthedocs.io/en/latest/
