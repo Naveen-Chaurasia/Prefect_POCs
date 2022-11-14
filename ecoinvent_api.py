@@ -15,13 +15,6 @@ def home():
   
         data = "hello world"
         return jsonify({'data': data})
-  
-
-@app.route('/home/<int:num>', methods = ['GET'])
-def disp(num):
-  
-    return jsonify({'data': num**2})
-    
     
 @app.route('/lcia/<string:num>', methods = ['GET'])
 def lcia(num):
