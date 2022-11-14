@@ -61,7 +61,7 @@ sample_flow("https://beta3.api.climatiq.io/search?query=resin&results_per_page=1
 
 
 #prefect orion start
-# http://127.0.0.1:4200
+#http://127.0.0.1:4200
 #https://pubchemdocs.ncbi.nlm.nih.gov/pug-rest-tutorial#_Toc458584416
 #https://www.slideshare.net/SunghwanKim95/how-can-you-access-pubchem-programmatically-96003851
 #https://chemspipy.readthedocs.io/en/latest/
@@ -69,3 +69,4 @@ sample_flow("https://beta3.api.climatiq.io/search?query=resin&results_per_page=1
 #FOR FINDING COMPONENT TCOMPOUNDS
 #https://pubchem.ncbi.nlm.nih.gov/rest/pug_view/data/compound/169944/JSON/?heading=Component+Compounds
 #https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/epoxy resin/JSON/?heading=Component+Compounds
+#https://v38.ecoquery.ecoinvent.org/Details/LCIA/98ba622f-7696-478e-816f-a9a5640cfd91/290c1f85-4cc4-4fa1-b0c8-2cb7f4276dce
