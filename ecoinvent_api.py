@@ -26,11 +26,15 @@ def lcia(num):
            
 @app.route('/chemInfo/<string:num>', methods = ['GET'])
 def chemicalInfo(num):
-    url='https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/'+num+'/cids/JSON'
-    record_number=requests.get(url,headers={'Content-Type':'application/json'})
+    cidurl='https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/'+num+'/cids/JSON'
+    record_number=requests.get(cidurl,headers={'Content-Type':'application/json'})
     
     
-    return str(record_number.json()['IdentifierList']['CID'][0])
+    cid = str(record_number.json()['IdentifierList']['CID'][0])
+    
+    chemInfourl='https://pubchem.ncbi.nlm.nih.gov/rest/pug_view/data/compound/'+cid+'/JSON/'
+    chemInfo=requests.get(chemInfourl,headers={'Content-Type':'application/json'})
+    return chemInfo.json()
   
     
 # driver function
