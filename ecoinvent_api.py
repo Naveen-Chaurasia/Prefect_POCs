@@ -28,7 +28,9 @@ def lcia(num):
 def chemicalInfo(num):
     url='https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/'+num+'/cids/JSON'
     record_number=requests.get(url,headers={'Content-Type':'application/json'})
-    return record_number.json()['IdentifierList']['CID'][0]
+    
+    
+    return str(record_number.json()['IdentifierList']['CID'][0])
   
     
 # driver function
