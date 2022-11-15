@@ -23,8 +23,14 @@ def lcia(num):
        for row in csvreader:
           if row[3]== num:
            return jsonify({'data': row})    
+           
+@app.route('/chemInfo/<string:num>', methods = ['GET'])
+def chemicalInfo(num):
+    url='https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/'+num+'/cids/JSON'
+    record_number=requests.get(url,headers={'Content-Type':'application/json'})
+    return record_number.json()['IdentifierList']['CID'][0]
   
-  
+    
 # driver function
 if __name__ == '__main__':
   
