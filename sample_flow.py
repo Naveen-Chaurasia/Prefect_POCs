@@ -69,4 +69,5 @@ sample_flow("https://beta3.api.climatiq.io/search?query=resin&results_per_page=1
 #FOR FINDING COMPONENT TCOMPOUNDS
 #https://pubchem.ncbi.nlm.nih.gov/rest/pug_view/data/compound/169944/JSON/?heading=Component+Compounds
 #https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/epoxy resin/JSON/?heading=Component+Compounds
+#https://pubchem.ncbi.nlm.nih.gov/rest/pug_view/data/compound/169944/JSON/
 #https://v38.ecoquery.ecoinvent.org/Details/LCIA/98ba622f-7696-478e-816f-a9a5640cfd91/290c1f85-4cc4-4fa1-b0c8-2cb7f4276dce
