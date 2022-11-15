@@ -16,6 +16,7 @@ def home():
         data = "hello world"
         return jsonify({'data': data})
     
+    
 @app.route('/lcia/<string:num>', methods = ['GET'])
 def lcia(num):
     with open("D:\Ardhi\Ecoinvent\cut-off-system-model\Cut-off Cumulative LCIA v3.9.csv", 'r') as file:
@@ -23,18 +24,16 @@ def lcia(num):
        for row in csvreader:
           if row[3]== num:
            return jsonify({'data': row})    
-           
+  
+  
 @app.route('/chemInfo/<string:num>', methods = ['GET'])
 def chemicalInfo(num):
     cidurl='https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/'+num+'/cids/JSON'
     record_number=requests.get(cidurl,headers={'Content-Type':'application/json'})
-    
-    
     cid = str(record_number.json()['IdentifierList']['CID'][0])
-    
     chemInfourl='https://pubchem.ncbi.nlm.nih.gov/rest/pug_view/data/compound/'+cid+'/JSON/'
     chemInfo=requests.get(chemInfourl,headers={'Content-Type':'application/json'})
-    return chemInfo.json()
+    return chemInfo.json()['Record']['Section']
   
     
 # driver function
