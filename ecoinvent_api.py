@@ -22,7 +22,7 @@ def lcia(num):
     with open("D:\Ardhi\Ecoinvent\cut-off-system-model\Cut-off Cumulative LCIA v3.9.csv", 'r') as file:
        csvreader = csv.reader(file)
        for row in csvreader:
-          if row[3]== num:
+          if num == (row[3].split())[0]:
            return jsonify({'data': row})    
   
   
