@@ -23,10 +23,40 @@ def lcia(num):
        csvreader = csv.reader(file)
        for row in csvreader:
           if num == row[3]:
+           
            return jsonify({'data': row})  
 
           elif num in row[3]:
            return jsonify({'data': row})          
+  
+@app.route('/add_header', methods = ['GET'])
+def addHeader():
+    with open("D:\Ardhi\Ecoinvent\cut-off-system-model\Cut-off Cumulative LCIA v3.9.csv", 'r') as file:
+       filename = "unit_process.csv"
+       csvreader = csv.reader(file)
+       
+       for row in csvreader:
+        header=row
+        break
+       with open(filename, 'w') as csvfile: 
+         csvwriter = csv.writer(csvfile)  
+         csvwriter.writerow(header)
+         return header
+
+
+
+ 
+def add_header_of_csv(results): 
+    fields = ['id', 'name', 'category', 'sector','constituent_gases'] 
+    filename = "climateiq.csv"
+    # writing to csv file 
+    with open(filename, 'w') as csvfile:  
+     csvwriter = csv.writer(csvfile)  
+     csvwriter.writerow(fields) 
+    return results  
+  
+  
+  
   
   
 @app.route('/chemInfo/<string:num>', methods = ['GET'])
