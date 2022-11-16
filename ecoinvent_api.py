@@ -4,7 +4,6 @@ from prefect import flow, task
 import json
 import csv
   
-
 app = Flask(__name__)
   
 # on the terminal type: curl http://127.0.0.1:5000/
@@ -29,6 +28,7 @@ def lcia(num):
           elif num in row[3]:
            return jsonify({'data': row})          
   
+  
 @app.route('/add_header', methods = ['GET'])
 def addHeader():
     with open("D:\Ardhi\Ecoinvent\cut-off-system-model\Cut-off Cumulative LCIA v3.9.csv", 'r') as file:
@@ -43,22 +43,8 @@ def addHeader():
          csvwriter.writerow(header)
          return header
 
-
-
+  
  
-def add_header_of_csv(results): 
-    fields = ['id', 'name', 'category', 'sector','constituent_gases'] 
-    filename = "climateiq.csv"
-    # writing to csv file 
-    with open(filename, 'w') as csvfile:  
-     csvwriter = csv.writer(csvfile)  
-     csvwriter.writerow(fields) 
-    return results  
-  
-  
-  
-  
-  
 @app.route('/chemInfo/<string:num>', methods = ['GET'])
 def chemicalInfo(num):
     cidurl='https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/'+num+'/cids/JSON'
