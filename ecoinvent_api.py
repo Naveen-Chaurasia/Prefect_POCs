@@ -33,11 +33,11 @@ def lcia(num):
            return jsonify({'data': row})  
 
 
-@app.route('/addlcia/<string:num>', methods = ['GET'])
-def addlcia(num):
+@app.route('/addlcia/<string:num>/<string:uploadedfilename>', methods = ['GET'])
+def addlcia(num,uploadedfilename):
     with open("D:\Ardhi\Ecoinvent\cut-off-system-model\Cut-off Cumulative LCIA v3.9.csv", 'r') as file:
        csvreader = csv.reader(file)
-       filename = "unit_process.csv"
+       filename = "unit_process__"+uploadedfilename
        with open(filename, 'a') as csvfile:
            csvwriter = csv.writer(csvfile)  
       
@@ -77,8 +77,6 @@ def chemicalInfo(num):
     
    
     
-    
-# Route that will process the file upload
 @app.route('/upload', methods=['POST'])
 def upload():
     # Get the name of the uploaded file
@@ -86,29 +84,45 @@ def upload():
 
     # Check if the file is one of the allowed types/extensions
     if file :#and allowed_file(file.filename):
-        # Make the filename safe, remove unsupported chars
+        
         filename = file.filename
-
-        # Move the file form the temporal folder to
-        # the upload folder we setup
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-
-        # Redirect the user to the uploaded_file route, which
-        # will basicaly show on the browser the uploaded file
         #return redirect(url_for('YOUR REDIRECT FUNCTION NAME',filename=filename))    
         return 'done'
     
     
-@app.route('/readcsvFile/', methods = ['GET'])  
-def readcsvfile():
-    with open("D:\Ardhi\Ecoinvent\cut-off-system-model\inputFile.csv", 'r') as file:
+@app.route('/readcsvfile/<string:readfilename>', methods = ['GET'])  
+def readcsvfile(readfilename):
+    loc='D:\Ardhi\Ecoinvent\cut-off-system-model'+'\\'+readfilename
+    with open(loc, 'r') as file:
        csvreader = csv.reader(file)
        for row in csvreader: 
-         url='http://127.0.0.1:5000/addlcia/'+row[0]
+         url='http://127.0.0.1:5000/addlcia/'+row[0]+'/'+readfilename
          response=requests.get(url)
          print (response)
          
-    return 'done'            
+    return 'done' 
+
+#method not working  problem in reding csv file without sasving it
+# Route that will process the file upload
+@app.route('/uploadandreadcsv', methods=['POST'])
+def uploadandreadcsv():
+    
+    file = request.files['file']
+    with open(file, 'r') as file1:
+    # Check if the file is one of the allowed types/extensions
+        if file1 :#and allowed_file(file.filename):
+                
+                filename = file.filename
+
+                csvreader = csv.reader(file1)
+                for row in csvreader: 
+                     url='http://127.0.0.1:5000/addlcia/'+row[0]+'/'+filename
+                     response=requests.get(url)
+                     print (response)
+                     
+                return 'done'       
+            
                 
 # driver function
 if __name__ == '__main__':
