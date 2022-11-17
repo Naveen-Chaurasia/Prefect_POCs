@@ -68,8 +68,19 @@ def chemicalInfo(num):
     chemInfourl='https://pubchem.ncbi.nlm.nih.gov/rest/pug_view/data/compound/'+cid+'/JSON/'
     chemInfo=requests.get(chemInfourl,headers={'Content-Type':'application/json'})
     return chemInfo.json()['Record']['Section']
-  
     
+    
+@app.route('/readcsvFile/', methods = ['GET'])  
+def readcsvfile():
+    with open("D:\Ardhi\Ecoinvent\cut-off-system-model\inputFile.csv", 'r') as file:
+       csvreader = csv.reader(file)
+       for row in csvreader: 
+         url='http://127.0.0.1:5000/addlcia/'+row[0]
+         response=requests.get(url)
+         print (response)
+         
+    return 'done'            
+                
 # driver function
 if __name__ == '__main__':
   
