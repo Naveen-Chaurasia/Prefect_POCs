@@ -1,10 +1,14 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request,redirect
 import requests
 from prefect import flow, task
 import json
 import csv
+import os
   
 app = Flask(__name__)
+
+app.config['UPLOAD_FOLDER'] = 'D:\pythone\JUPYTER NOTEBOOKS\Prefecte'
+app.config['ALLOWED_EXTENSIONS'] = set(['csv']) 
   
 # on the terminal type: curl http://127.0.0.1:5000/
 
@@ -27,6 +31,7 @@ def lcia(num):
 
           elif num in row[3]:
            return jsonify({'data': row})  
+
 
 @app.route('/addlcia/<string:num>', methods = ['GET'])
 def addlcia(num):
@@ -68,6 +73,30 @@ def chemicalInfo(num):
     chemInfourl='https://pubchem.ncbi.nlm.nih.gov/rest/pug_view/data/compound/'+cid+'/JSON/'
     chemInfo=requests.get(chemInfourl,headers={'Content-Type':'application/json'})
     return chemInfo.json()['Record']['Section']
+    
+    
+   
+    
+    
+# Route that will process the file upload
+@app.route('/upload', methods=['POST'])
+def upload():
+    # Get the name of the uploaded file
+    file = request.files['file']
+
+    # Check if the file is one of the allowed types/extensions
+    if file:
+        # Make the filename safe, remove unsupported chars
+        filename = file.filename
+
+        # Move the file form the temporal folder to
+        # the upload folder we setup
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+        # Redirect the user to the uploaded_file route, which
+        # will basicaly show on the browser the uploaded file
+        #return redirect(url_for('YOUR REDIRECT FUNCTION NAME',filename=filename))    
+        return 'done'
     
     
 @app.route('/readcsvFile/', methods = ['GET'])  
