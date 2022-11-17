@@ -85,7 +85,7 @@ def upload():
     file = request.files['file']
 
     # Check if the file is one of the allowed types/extensions
-    if file:
+    if file :#and allowed_file(file.filename):
         # Make the filename safe, remove unsupported chars
         filename = file.filename
 
