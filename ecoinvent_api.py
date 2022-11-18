@@ -103,7 +103,9 @@ def readcsvfile(readfilename):
          
     return 'done' 
 
-#method not working  problem in reding csv file without sasving it
+
+
+#method not working  problem in reding csv file without saving it
 # Route that will process the file upload
 @app.route('/uploadandreadcsv', methods=['POST'])
 def uploadandreadcsv():
