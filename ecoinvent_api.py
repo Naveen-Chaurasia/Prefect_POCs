@@ -57,24 +57,38 @@ def lcia(num):
            return jsonify({'data': row})  
 
           elif num in row[3]:
-           return jsonify({'data': row}) 
+           return jsonify({'data': row})  
 
 
+    
 @app.route('/upload', methods=['POST'])
-def upload():
+def upload_read_add_generate_lcia():
     # Get the name of the uploaded file
     file = request.files['file']
-
+     
     # Check if the file is one of the allowed types/extensions
     if file :#and allowed_file(file.filename):
         
         filename = file.filename
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         #return redirect(url_for('YOUR REDIRECT FUNCTION NAME',filename=filename))    
-        return 'done'
-               
-
-
+        return readcsvfile(filename)
+    
+    
+@app.route('/readcsvfile/<string:readfilename>', methods = ['GET'])  
+def readcsvfile(readfilename):
+    loc='D:\Ardhi\Ecoinvent\cut-off-system-model'+'\\'+readfilename
+    with open(loc, 'r') as file:
+       csvreader = csv.reader(file)
+       for row in csvreader: 
+         url='http://127.0.0.1:5000/addlcia/'+row[0]+'/'+readfilename
+         response=requests.get(url)
+         print (response)
+         
+    return 'done' 
+    
+    
+    
 @app.route('/addlcia/<string:num>/<string:uploadedfilename>', methods = ['GET'])
 def addlcia(num,uploadedfilename):
     with open("D:\Ardhi\Ecoinvent\cut-off-system-model\Cut-off Cumulative LCIA v3.9.csv", 'r') as file:
@@ -92,19 +106,7 @@ def addlcia(num,uploadedfilename):
                csvwriter.writerow(row)
                return jsonify({'data': row})                
   
- 
-    
-@app.route('/readcsvfile/<string:readfilename>', methods = ['GET'])  
-def readcsvfile(readfilename):
-    loc='D:\Ardhi\Ecoinvent\cut-off-system-model'+'\\'+readfilename
-    with open(loc, 'r') as file:
-       csvreader = csv.reader(file)
-       for row in csvreader: 
-         url='http://127.0.0.1:5000/addlcia/'+row[0]+'/'+readfilename
-         response=requests.get(url)
-         print (response)
-         
-    return 'done' 
+      
 
 
 
