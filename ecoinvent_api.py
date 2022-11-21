@@ -5,6 +5,7 @@ import json
 import csv
 import os
   
+  
 app = Flask(__name__)
 
 app.config['UPLOAD_FOLDER'] = 'D:\pythone\JUPYTER NOTEBOOKS\Prefecte'
@@ -20,6 +21,14 @@ def home():
         return jsonify({'data': data})
         
         
+@app.route('/similar_materials', methods = ['GET', 'POST'])
+def similar_materials():
+    
+
+
+
+    
+ 
 @app.route('/add_header', methods = ['GET'])
 def addHeader():
     with open("D:\Ardhi\Ecoinvent\cut-off-system-model\Cut-off Cumulative LCIA v3.9.csv", 'r') as file:
@@ -107,9 +116,6 @@ def addlcia(num,uploadedfilename):
                return jsonify({'data': row})                
   
       
-
-
-
 #method not working  problem in reding csv file without saving it
 # Route that will process the file upload
 @app.route('/uploadandreadcsv', methods=['POST'])
