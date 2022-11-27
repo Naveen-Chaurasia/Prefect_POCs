@@ -4,7 +4,7 @@ from prefect import flow, task
 import json
 import csv
 import os
-  
+import jellyfish  
   
 app = Flask(__name__)
 
@@ -21,10 +21,10 @@ def home():
         return jsonify({'data': data})
         
         
-@app.route('/similar_materials', methods = ['GET', 'POST'])
-def similar_materials():
+#@app.route('/similar_materials', methods = ['GET', 'POST'])
+#def similar_materials():
     
-
+#https://towardsdatascience.com/calculate-similarity-the-most-relevant-metrics-in-a-nutshell-9a43564f533e
 
 
     
@@ -67,9 +67,25 @@ def lcia(num):
 
           elif num in row[3]:
            return jsonify({'data': row})  
+           
+#############################################################################
+           
+@app.route('/similarity_lcia/<string:num>', methods = ['GET'])
+def similarity_lcia(num):
+    with open("D:\Ardhi\Ecoinvent\cut-off-system-model\Cut-off Cumulative LCIA v3.9.csv", 'r') as file:
+       csvreader = csv.reader(file)
+       maxdis=0
+       max_sim_row=[]
+       for row in csvreader:
+           dis=jellyfish.jaro_distance(num, row[3])
+           if(dis>maxdis):
+            maxdis=dis
+            max_sim_row=row
+       return jsonify({'data': max_sim_row,'score':maxdis})            
+           
+          
 
-
-    
+ ######################################################################################   
 @app.route('/upload', methods=['POST'])
 def upload_read_add_generate_lcia():
     # Get the name of the uploaded file
