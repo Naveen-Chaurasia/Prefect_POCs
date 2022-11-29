@@ -68,8 +68,7 @@ def lcia(num):
           elif num in row[3]:
            return jsonify({'data': row})  
            
-#############################################################################
-           
+#############################################################################      
 @app.route('/similarity_lcia/<string:num>', methods = ['GET'])
 def similarity_lcia(num):
     with open("D:\Ardhi\Ecoinvent\cut-off-system-model\Cut-off Cumulative LCIA v3.9.csv", 'r') as file:
@@ -81,11 +80,24 @@ def similarity_lcia(num):
            if(dis>maxdis):
             maxdis=dis
             max_sim_row=row
-       return jsonify({'data': max_sim_row,'score':maxdis})            
-           
-          
+       return jsonify({'data': max_sim_row,'score':maxdis})  
 
- ######################################################################################   
+
+
+@app.route('/similarity_lcia1/<string:num>', methods = ['GET'])
+def similarity_lcia1(num):
+    with open("D:\Ardhi\Ecoinvent\cut-off-system-model\Cut-off Cumulative LCIA v3.9.csv", 'r') as file:
+       csvreader = csv.reader(file)
+       maxdis=0
+       max_sim_row=[]
+       for row in csvreader:
+           dis=jellyfish.jaro_distance(num, row[3])
+           if(dis>maxdis):
+            maxdis=dis
+            max_sim_row=row
+       return jsonify({'data': max_sim_row,'score':maxdis})       
+           
+######################################################################################   
 @app.route('/upload', methods=['POST'])
 def upload_read_add_generate_lcia():
     # Get the name of the uploaded file
