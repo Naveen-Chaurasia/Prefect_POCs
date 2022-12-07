@@ -89,10 +89,17 @@ def similarity_lcia1(num):
     with open("D:\Ardhi\Ecoinvent\cut-off-system-model\Cut-off Cumulative LCIA v3.9.csv", 'r') as file:
        csvreader = csv.reader(file)
        list_of_similar_materials=[]
+       list_of_similar_materials1={}
        for row in csvreader:
-          if row[3]== num:
-           list_of_similar_materials.append(row)
-       return jsonify({'data': list_of_similar_materials})       
+          if num in row[3]:
+           dis=jellyfish.jaro_distance(num, str(row[3]))
+            #row=row.append(dis)
+           row_with_score=jsonify({'data':row,'similarity_score':dis})
+           
+           list_of_similar_materials1['data']=row
+           list_of_similar_materials1['similarity_score']=dis
+           list_of_similar_materials.append(list_of_similar_materials1)
+       return list_of_similar_materials      
            
 ######################################################################################   
 @app.route('/upload', methods=['POST'])
