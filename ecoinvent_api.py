@@ -76,7 +76,7 @@ def similarity_lcia(num):
        maxdis=0
        max_sim_row=[]
        for row in csvreader:
-           dis=jellyfish.jaro_distance(num, row[3])
+           dis=jellyfish.jaro_distance(num, str(row[3]))
            if(dis>maxdis):
             maxdis=dis
             max_sim_row=row
@@ -91,11 +91,8 @@ def similarity_lcia1(num):
        maxdis=0
        max_sim_row=[]
        for row in csvreader:
-           dis=jellyfish.jaro_distance(num, row[3])
-           if(dis>maxdis):
-            maxdis=dis
-            max_sim_row=row
-       return jsonify({'data': max_sim_row,'score':maxdis})       
+           if num == row[3]:
+             return jsonify({'data': row})       
            
 ######################################################################################   
 @app.route('/upload', methods=['POST'])
