@@ -88,11 +88,11 @@ def similarity_lcia(num):
 def similarity_lcia1(num):
     with open("D:\Ardhi\Ecoinvent\cut-off-system-model\Cut-off Cumulative LCIA v3.9.csv", 'r') as file:
        csvreader = csv.reader(file)
-       maxdis=0
-       max_sim_row=[]
+       list_of_similar_materials=[]
        for row in csvreader:
-           if num == row[3]:
-             return jsonify({'data': row})       
+          if row[3]== num:
+           list_of_similar_materials.append(row)
+       return jsonify({'data': list_of_similar_materials})       
            
 ######################################################################################   
 @app.route('/upload', methods=['POST'])
