@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request,redirect
 import requests
-from prefect import flow, task
+
 import json
 import csv
 import os
@@ -50,6 +50,8 @@ def chemicalInfo(num):
     cid = str(record_number.json()['IdentifierList']['CID'][0])
     chemInfourl='https://pubchem.ncbi.nlm.nih.gov/rest/pug_view/data/compound/'+cid+'/JSON/'
     chemInfo=requests.get(chemInfourl,headers={'Content-Type':'application/json'})
+    print("********************************************************")
+    print(type(chemInfo.content.json()))
     return chemInfo.json()['Record']['Section']
     
     
@@ -58,9 +60,11 @@ def chemicalInfo(num):
     
 @app.route('/lcia/<string:num>', methods = ['GET'])
 def lcia(num):
-    with open("D:\Ardhi\Ecoinvent\cut-off-system-model\Cut-off Cumulative LCIA v3.9.csv", 'r') as file:
+    with open("D:\Ardhi\Ecoinvent\cut-off-system-model\sample_eco_lcia.csv", 'r') as file:
        csvreader = csv.reader(file)
        for row in csvreader:
+          print("________________________________________________________")
+          print(row)
           if num == row[3]:
            
            return jsonify({'data': row})  
@@ -132,7 +136,7 @@ def readcsvfile(readfilename):
     
 @app.route('/addlcia/<string:num>/<string:uploadedfilename>', methods = ['GET'])
 def addlcia(num,uploadedfilename):
-    with open("D:\Ardhi\Ecoinvent\cut-off-system-model\Cut-off Cumulative LCIA v3.9.csv", 'r') as file:
+    with open("D:\Ardhi\Ecoinvent\cut-off-system-model\sample_eco_lcia.csv", 'r') as file:
        csvreader = csv.reader(file)
        filename = "unit_process__"+uploadedfilename
        with open(filename, 'a') as csvfile:
